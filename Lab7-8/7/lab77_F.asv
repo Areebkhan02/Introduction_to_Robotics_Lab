@@ -1,0 +1,287 @@
+clc;
+im = imread('untitled.png');
+img = im2double(im);
+
+% Define the red color range in the RGB color space
+%red range
+min = [0.2 0 0];
+max = [0.4 0.16 0.18];
+
+% Threshold the image to extract the red regions
+red_mask = (img(:,:,1) >= min(1)) & (img(:,:,1) <= max(1)) & (img(:,:,2) >= min(2)) & (img(:,:,2) <= max(2)) & (img(:,:,3) <= max(3)) & (img(:,:,3) >= min(3));
+
+% Clean up the mask using morphological operations
+se = strel('square', 10);
+red_mask = imclose(imopen(red_mask, se), se);
+
+% Find connected components in the mask
+cc = bwconncomp(red_mask);
+
+% Extract the location of the red cubes as a list of centroids
+stats = regionprops(cc, 'Centroid');
+red_cubes = cat(1, stats.Centroid);
+disp(red_cubes);
+disp(size(red_cubes));
+% Display the image with the red cubes marked
+imshow(img);
+hold on;
+plot(red_cubes(:,1), red_cubes(:,2), 'ro', 'MarkerSize', 10, 'LineWidth', 2);
+
+
+
+% yellow
+min = [0.43 0.3 0];
+max = [1 0.35 1];
+yellow_mask = (img(:,:,1) >= min(1)) & (img(:,:,1) <= max(1)) & (img(:,:,2) >= min(2)) & (img(:,:,2) <= max(2)) & (img(:,:,3) <= max(3)) & (img(:,:,3) >= min(3));
+
+% Clean up the mask using morphological operations
+se = strel('square', 10);
+yellow_mask = imclose(imopen(yellow_mask, se), se);
+
+% Find connected components in the mask
+cc = bwconncomp(yellow_mask);
+
+% Extract the location of the red cubes as a list of centroids
+stats = regionprops(cc, 'Centroid');
+yellow_cubes = cat(1, stats.Centroid);
+disp(yellow_cubes);
+disp(size(yellow_cubes));
+% Display the image with the red cubes marked
+
+plot(yellow_cubes(:,1), yellow_cubes(:,2), 'yo', 'MarkerSize', 10, 'LineWidth', 2);
+hold on;
+
+
+% green
+min = [0.02 0.24 0.2];
+max = [0.2 0.31 0.3];
+green_mask = (img(:,:,1) >= min(1)) & (img(:,:,1) <= max(1)) & (img(:,:,2) >= min(2)) & (img(:,:,2) <= max(2)) & (img(:,:,3) <= max(3)) & (img(:,:,3) >= min(3));
+
+% Clean up the mask using morphological operations
+se = strel('square', 10);
+green_mask = imclose(imopen(green_mask, se), se);
+
+% Find connected components in the mask
+cc = bwconncomp(green_mask);
+
+% Extract the location of the red cubes as a list of centroids
+stats = regionprops(cc, 'Centroid');
+green_cubes = cat(1, stats.Centroid);
+disp(green_cubes);
+disp(size(green_cubes));
+% Display the image with the red cubes marked
+
+plot(green_cubes(:,1), green_cubes(:,2), 'go', 'MarkerSize', 10, 'LineWidth', 2);
+hold on;
+
+
+%blue
+min = [0 0.2 0.4];
+max = [0 0.5 0.5];
+blue_mask = (img(:,:,1) >= min(1)) & (img(:,:,1) <= max(1)) & (img(:,:,2) >= min(2)) & (img(:,:,2) <= max(2)) & (img(:,:,3) <= max(3)) & (img(:,:,3) >= min(3));
+
+% Clean up the mask using morphological operations
+se = strel('square', 10);
+blue_mask = imclose(imopen(blue_mask, se), se);
+
+% Find connected components in the mask
+cc = bwconncomp(blue_mask);
+
+% Extract the location of the red cubes as a list of centroids
+stats = regionprops(cc, 'Centroid');
+blue_cubes = cat(1, stats.Centroid);
+disp(blue_cubes);
+disp(size(blue_cubes));
+% Display the image with the red cubes marked
+
+plot(blue_cubes(:,1), blue_cubes(:,2), 'bo', 'MarkerSize', 10, 'LineWidth', 2);
+hold on;
+
+%%
+
+
+%%
+% Clear the command window and any existing variables
+clc;
+clear;
+
+% Read in the image and convert it to a double precision format
+im = imread('untitled.png');
+img = im2double(im);
+
+% Define the minimum and maximum values for the red color range in the RGB color space
+min = [0.2 0 0];
+max = [0.4 0.16 0.18];
+
+% Create a binary mask that is true for all pixels that fall within the specified red color range
+red_mask = (img(:,:,1) >= min(1)) & (img(:,:,1) <= max(1)) & ...
+           (img(:,:,2) >= min(2)) & (img(:,:,2) <= max(2)) & ...
+           (img(:,:,3) <= max(3)) & (img(:,:,3) >= min(3));
+
+% Clean up the mask using morphological operations to remove any small holes or gaps in the red regions
+se = strel('square', 10);
+red_mask = imclose(imopen(red_mask, se), se);
+
+% Find connected components in the mask (i.e. clusters of adjacent pixels that are true)
+cc = bwconncomp(red_mask);
+
+% Extract the centroid locations of each connected component as a list of points
+stats = regionprops(cc, 'Centroid');
+red_cubes = cat(1, stats.Centroid);
+
+% Display the number and coordinates of the detected red cubes
+disp(red_cubes);
+disp(size(red_cubes));
+
+% Display the original image with the detected red cubes marked as red circles
+imshow(img);
+hold on;
+plot(red_cubes(:,1), red_cubes(:,2), 'ro', 'MarkerSize', 10, 'LineWidth', 2);
+
+% Repeat the above steps for each of the other colors (yellow, green, blue)
+
+% Yellow color range
+min = [0.43 0.3 0];
+max = [1 0.35 1];
+yellow_mask = (img(:,:,1) >= min(1)) & (img(:,:,1) <= max(1)) & ...
+              (img(:,:,2) >= min(2)) & (img(:,:,2) <= max(2)) & ...
+              (img(:,:,3) <= max(3)) & (img(:,:,3) >= min(3));
+yellow_mask = imclose(imopen(yellow_mask, se), se);
+cc = bwconncomp(yellow_mask);
+stats = regionprops(cc, 'Centroid');
+yellow_cubes = cat(1, stats.Centroid);
+disp(yellow_cubes);
+disp(size(yellow_cubes));
+plot(yellow_cubes(:,1), yellow_cubes(:,2), 'yo', 'MarkerSize', 10, 'LineWidth', 2);
+hold on;
+
+% Green color range
+min = [0.02 0.24 0.2];
+max = [0.2 0.31 0.3];
+green_mask = (img(:,:,1) >= min(1)) & (img(:,:,1) <= max(1)) & ...
+             (img(:,:,2) >= min(2)) & (img(:,:,2) <= max(2)) & ...
+             (img(:,:,3) <= max(3)) & (img(:,:,3) >= min(3));
+green_mask = imclose(imopen(green_mask, se), se);
+cc = bwconncomp(green_mask);
+stats = regionprops(cc, 'Centroid');
+green_cubes = cat(1, stats.Centroid);
+disp(green_cubes);
+disp(size(green_cubes));
+plot(green_cubes(:,1), green_cubes)
+%%
+% Clear the command window and any existing variables
+clc;
+clear;
+
+% Read in the image and convert it to a double precision format
+im = imread('untitled.png');
+img = im2double(im);
+
+% Define the color ranges for each cube color
+color_ranges = {[0.2 0 0] [0.4 0.16 0.18]; ... % red
+                [0.43 0.3 0] [1 0.35 1]; ... % yellow
+                [0.02 0.24 0.2] [0.2 0.31 0.3]}; % green
+
+% Define a morphological structuring element for cleaning up the masks
+se = strel('square', 10);
+
+% Loop through each color range and detect the cubes of that color
+for color_idx = 1:size(color_ranges, 1)
+    % Extract the minimum and maximum values for the current color range
+    min_vals = color_ranges{color_idx, 1};
+    max_vals = color_ranges{color_idx, 2};
+    
+    % Create a binary mask that is true for all pixels that fall within the specified color range
+    color_mask = (img(:,:,1) >= min_vals(1)) & (img(:,:,1) <= max_vals(1)) & ...
+                 (img(:,:,2) >= min_vals(2)) & (img(:,:,2) <= max_vals(2)) & ...
+                 (img(:,:,3) <= max_vals(3)) & (img(:,:,3) >= min_vals(3));
+    
+    % Clean up the mask using morphological operations to remove any small holes or gaps in the color regions
+    color_mask = imclose(imopen(color_mask, se), se);
+
+    % Find connected components in the mask (i.e. clusters of adjacent pixels that are true)
+    cc = bwconncomp(color_mask);
+
+    % Extract the centroid locations of each connected component as a list of points
+    stats = regionprops(cc, 'Centroid');
+    cube_centers = cat(1, stats.Centroid);
+
+    % Display the number and coordinates of the detected cubes of the current color
+    fprintf('Detected %d %s cubes at coordinates:\n', size(cube_centers, 1), num2str(color_idx));
+    disp(cube_centers);
+
+    % Display the original image with the detected cubes of the current color marked as colored circles
+    colors = {'r', 'y', 'g'}; % define circle colors for each cube color
+    imshow(img);
+    hold on;
+    plot(cube_centers(:,1), cube_centers(:,2), [colors{color_idx} 'o'], 'MarkerSize', 10, 'LineWidth', 2);
+end
+%%
+% Clear the command window and any existing variables
+clc;
+clear;
+
+% Read in the image and convert it to a double precision format
+im = imread('untitled.png');
+img = im2double(im);
+
+% Define the color ranges for the cubes in the RGB color space
+color_ranges = [0.2 0 0 0.4 0.16 0.18%red
+    0.43 0.3 0 1 0.35 1%yellow
+    0.02 0.24 0.2 0.2 0.31 0.3%green
+    0 0.2 0.4 0 0.5 0.5];%blue
+
+% Create an empty array to store the centroids of the detected cubes
+all_cubes = [];
+
+% Loop through each color range and detect the cubes in that color
+for i = 1:4
+    % Define the minimum and maximum values for the color range
+    min = color_ranges(i, 1:3);
+    max = color_ranges(i, 4:6);
+    
+    % Create a binary mask that is true for all pixels that fall within the specified color range
+    color_mask = (img(:,:,1) >= min(1)) & (img(:,:,1) <= max(1)) & ...
+                 (img(:,:,2) >= min(2)) & (img(:,:,2) <= max(2)) & ...
+                 (img(:,:,3) >= min(3)) & (img(:,:,3) <= max(3));
+    
+    % Clean up the mask using morphological operations to remove any small holes or gaps in the color regions
+    se = strel('square', 10);
+    color_mask = imclose(imopen(color_mask, se), se);
+    
+    % Find connected components in the mask (i.e. clusters of adjacent pixels that are true)
+    cc = bwconncomp(color_mask);
+    
+    % Extract the centroid locations of each connected component as a list of points
+    stats = regionprops(cc, 'Centroid');
+    
+    % Append the centroids to the list of all cubes
+    all_cubes = [all_cubes; cat(1, stats.Centroid)]
+end
+
+% Display the number and coordinates of the detected cubes for each color
+for i = 1:4
+    
+    color_name = ['Red', 'Yellow', 'Green', 'Blue']
+    color_cubes = all_cubes((i-1)*cc.NumObjects+1:i*cc.NumObjects, :)
+    disp([color_name(i) ' cubes:'])
+    disp(color_cubes)
+    disp(size(color_cubes))
+    %fprintf("error check\n")
+end
+
+% Display the original image with the detected cubes marked as colored circles
+imshow(img);
+hold on;
+colors = ['r', 'y', 'g', 'b'];
+for i = 1:size(color_ranges, 1)
+    color_cubes = all_cubes((i-1)*cc.NumObjects+1:i*cc.NumObjects, :);
+    plot(color_cubes(:,1), color_cubes(:,2), [colors(i) 'o'], 'MarkerSize', 10, 'LineWidth', 2);
+end
+%%
+X=403;Y=306;
+red_cubes=all_cubes(1,:);blue_cubes=all_cubes(4,:);green_cubes=all_cubes(3,:);yellow_cubes=all_cubes(2,:);
+R_CUBE_COORD=[red_cubes(1,1)-X red_cubes(1,2)-Y]
+B_CUBE_COORD=[blue_cubes(1,1)-X blue_cubes(1,2)-Y]
+G_CUBE_COORD=[green_cubes(1,1)-X green_cubes(1,2)-Y]
+Y_CUBE_COORD=[yellow_cubes(1,1)-X yellow_cubes(1,2)-Y]
